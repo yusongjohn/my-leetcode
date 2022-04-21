@@ -33,4 +33,4 @@ function heapSort(nums, len) {
         swap(nums, i, 1);
         headAdjust(nums, 1, i - 1); // 最后一个元素从堆中溢出了（因为已经排好序了）
     }
-}
+} 
