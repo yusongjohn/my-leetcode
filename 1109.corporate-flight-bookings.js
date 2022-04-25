@@ -31,6 +31,7 @@ Difference.prototype.diff = function () {
 Difference.prototype.increment = function (startIndex, endIndex, val) {
     this.diff[startIndex] += val;
 
+    // 细节
     if ((endIndex + 1) < this.diff.length) {
         this.diff[endIndex + 1] -= val
     }
