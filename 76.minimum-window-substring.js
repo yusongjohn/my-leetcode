@@ -1,51 +1,61 @@
-/**
- * @param {string} s
- * @param {string} t
- * @return {string}
- */
-var minWindow = function (s, t) {
-    let tMap = new Map();
-    let windowMap = new Map();
+function minWindow(s, t) {
+    const originalS = s;
+    let need = {}, window = {};
+    s = s.split("")
+    t = t.split("")
+    t.forEach(c => {
+        if (!need[c]) {
+            need[c] = 1
+        } else {
+            need[c]++
+        }
 
-    s = s.split('');
-    t = t.split('');
+    });
+    const needCount = Object.getOwnPropertyNames(need).length
 
-    t.forEach(c => setMapValuePlus(tMap, c))
-
-    let left = 0, right = 0, validCharCount = 0;
-    // 更新 validCharCount
+    let left = 0, right = 0;
+    let valid = 0;
+    // 记录最小覆盖子串的起始索引及长度
+    let start = 0, len = Number.MAX_SAFE_INTEGER;
     while (right < s.length) {
-
-        // --------- 窗口扩张的逻辑 ---------
-        const currentChar = s[right];
+        // c 是将移入窗口的字符
+        const c = s[right];
+        // 扩大窗口
         right++;
+        // 进行窗口内数据的一系列更新
+        if (need[c]) {
+            if (!window[c]) {
+                window[c] = 1;
+            } else {
+                window[c]++;
+            }
 
-        // 如果当前字符有效，则添加到windowMap中
-        if (tMap.get(currentChar)) {
-            setMapValuePlus(windowMap, currentChar);
-
-            // 如果当前字符已经满足要求
-            if (windowMap[currentChar] === tMap[currentChar]) {
-                validCharCount++;
+            if (window[c] == need[c]) {
+                valid++
             }
         }
 
-        // --------- 窗口收缩的逻辑 ---------
-        // 当前窗口已经满足条件，开始收缩到最优解
-        // 隐藏了一个结论：当前字符右侧字符的最优解 >= 当前字符
-        // 因此窗口的收缩不会影响右侧的最优解
+        // 判断左侧窗口是否要收缩
+        while (valid == needCount) {
+            // 在这里更新最小覆盖子串
+            if (right - left <= len) {
+                start = left;
+                len = right - left;
+            }
 
-        // 先是满足，然后循环处理直至不满足 
-        while (validCharCount === tMap.size()) { 
-
+            // d 是将移出窗口的字符
+            let d = s[left];
+            // 缩小窗口
+            left++;
+            // 进行窗口内数据的一系列更新
+            if (need[d]) {
+                window[d]--;
+                if (window[d] < need[d]) valid--;
+            }
         }
     }
-
-
-    console.log(tMap)
-};
-
-function setMapValuePlus(map, key) {
-    const original = tMap.get(key);
-    map.set(key, original ? original + 1 : 1)
+    // 返回最小覆盖子串
+    return len == Number.MAX_SAFE_INTEGER ? "" : originalS.substr(start, len + start);
 }
+
+console.log(minWindow("abc", "b"))
