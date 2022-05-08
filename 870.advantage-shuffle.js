@@ -1,8 +1,10 @@
+// https://leetcode-cn.com/problems/advantage-shuffle/
+
 var advantageCount = function (A, B) {
-    let ord = Uint16Array.from({ length: B.length }, (_, i) => i);
+    let ord = Uint16Array.from({ length: B.length }, (_, i) => i); // 数组值：[0, nums2.length - 1] 的索引
     let ans = new Uint32Array(B.length);
 
-    ord.sort((a, b) => B[b] - B[a]); // 记录B的排序索引
+    ord.sort((a, b) => B[b] - B[a]); // 对B排序
     A.sort((a, b) => b - a);
 
     let i = 0, j = B.length - 1;
