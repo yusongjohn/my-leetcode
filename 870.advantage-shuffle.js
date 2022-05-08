@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/advantage-shuffle/
+// show top voted solution => https://leetcode.com/sgallivan/
 
 var advantageCount = function (A, B) {
     let ord = Uint16Array.from({ length: B.length }, (_, i) => i); // 数组值：[0, nums2.length - 1] 的索引
