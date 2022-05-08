@@ -5,7 +5,7 @@
  */
 var splitArray = function (nums, m) {
     // x为和的最大值
-    let leftSum = 0;
+    let leftSum = Math.max(...nums); // 最小的最大和
     let rightSum = nums.reduce((sum, currentvalue) => sum + currentvalue, 0);
 
     while (leftSum < rightSum) {
@@ -21,7 +21,7 @@ var splitArray = function (nums, m) {
         }
     }
 
-    if (getMinSplitNums(leftSum) <= m) {
+    if (getMinSplitNums(nums, leftSum) <= m) {
         return leftSum;
     }
 
@@ -35,14 +35,18 @@ function getMinSplitNums(nums, maxSum) {
     let i = 0;
     while (i < nums.length) {
         let sum = 0;
-        while (i < nums.length && sum <= maxSum) {
+        while (i < nums.length) {
             sum += nums[i];
-            i++;
+            if (sum <= maxSum) {
+                i++;
+            } else {
+                break
+            }
         }
         minSplitNums++;
     }
-    console.log(maxSum, minSplitNums);
     return minSplitNums;
 }
 
-console.log(splitArray([7, 2, 5, 10, 8], 2));
+// console.log(splitArray([7, 2, 5, 10, 8], 2));
+console.log(splitArray([1, 4, 4], 3))
