@@ -91,3 +91,5 @@ function swap(items, i, j) {
 
 
 // 示例：Q.347、Q.23
+
+module.exports = PriorityQueue

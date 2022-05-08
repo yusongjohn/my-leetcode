@@ -28,7 +28,7 @@ var splitArray = function (nums, m) {
     return leftSum + 1;
 };
 
-// 贪心地模拟分割的过程，计算出来的 minSplitNums 尽可能的小
+// 贪心地模拟分割的过程，计算出来的 minSplitNums 尽可能的小，minSplitNums <= m 则满足条件，继续收缩
 // 这个是一个单调（减）函数
 function getMinSplitNums(nums, maxSum) {
     let minSplitNums = 0;
@@ -37,11 +37,10 @@ function getMinSplitNums(nums, maxSum) {
         let sum = 0;
         while (i < nums.length) {
             sum += nums[i];
-            if (sum <= maxSum) {
-                i++;
-            } else {
+            if (sum > maxSum) {
                 break
             }
+            i++;
         }
         minSplitNums++;
     }
