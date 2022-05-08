@@ -12,9 +12,9 @@ var minEatingSpeed = function (piles, h) {
         const xMid = xLeft + Math.floor((xRight - xLeft) / 2);
         const midValue = getTimeBySpeed(piles, xMid);
 
-        if (midValue === h) {
+        if (midValue === h) { // 当前速度刚好满足条件，尝试有没有更小的速度可以满足
             xRight = xMid - 1;
-        } else if (midValue < h) {
+        } else if (midValue < h) { // 当前速度过大，可以减小速度
             xRight = xMid - 1;
         } else if (midValue > h) { // 不满足则要增大速度
             xLeft = xMid + 1
