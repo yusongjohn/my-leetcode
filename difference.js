@@ -11,9 +11,9 @@ Difference.prototype.diff = function () {
         return [];
     }
 
-    const diff = [0];
+    const diff = [nums[0]];
     for (let i = 1; i < this.nums.length; i++) {
-        diff = this.nums[i] - this.nums[i - 1];
+        diff[i] = this.nums[i] - this.nums[i - 1];
     }
     return diff;
 }
