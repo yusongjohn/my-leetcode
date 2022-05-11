@@ -1,5 +1,5 @@
 // 差分數組
-// leetcode: 題目： 370. 区间加法✨、1109. 航班预订统计、1094. 拼车, 2251: 花花
+// leetcode: 2251: 花花
 function Difference(changes = []) {
     this.diffMap = {};
     changes.forEach(([start, end]) => this.increment(start, end));
