@@ -25,8 +25,21 @@ function convertList2Array(head) {
 module.exports = {
     createLinkedList,
     convertList2Array,
+    TreeNode,
     ListNode: function (val, next) {
         this.val = (val === undefined ? 0 : val)
         this.next = (next === undefined ? null : next)
     }
+}
+
+
+// -------------------
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+function createTreeByArray([]) {
+
 }
