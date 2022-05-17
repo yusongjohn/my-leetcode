@@ -34,7 +34,7 @@ var countSmaller = function (nums) {
             if (i === mid + 1) {
                 tempIndex[count] = numsIndex[j];
                 temp[count++] = nums[j++];
-            } else if (j === right + 1) { // 右侧部分遍历完，
+            } else if (j === right + 1) { // 右侧部分遍历完，左侧剩余的元素都比右侧部分所有的元素都大
                 answers[numsIndex[i]] += (right - mid);
                 tempIndex[count] = numsIndex[i];
                 temp[count++] = nums[i++];
