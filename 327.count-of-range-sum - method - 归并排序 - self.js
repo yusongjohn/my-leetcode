@@ -6,6 +6,7 @@ var countRangeSum = function (nums, lower, upper) {
     // 左闭右闭
     function mergeAndSort(prefixSum, left, right) {
         if (left === right) {
+            // 计算 [0, left]的区间和
             if (prefixSum[left] >= lower && prefixSum[left] <= upper) return 1;
             return 0;
         }
@@ -17,7 +18,7 @@ var countRangeSum = function (nums, lower, upper) {
 
         let _tempL = mid + 1;
         let _tempR = mid + 1;
-        for (let start = left; start <= mid; start++) {
+        for (let start = left; start <= mid; start++) { // 不包含 [0] 这个元素
             // 从左往右找到第一个 prefixSum[_tempL] - prefixSum[start] >= lower
             while (_tempL <= right && prefixSum[_tempL] - prefixSum[start] < lower) {
                 _tempL++

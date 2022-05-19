@@ -37,9 +37,8 @@ var reversePairs = function (nums) {
                 }
             }
         }
-        sorted.forEach((value, index) => {
-            nums[left + index] = value;
-        });
+        
+        sorted.forEach((value, index) => nums[left + index] = value);
     }
 
     mergeSort(0, nums.length - 1);
