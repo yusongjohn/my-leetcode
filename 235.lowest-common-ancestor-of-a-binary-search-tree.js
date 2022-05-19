@@ -17,6 +17,8 @@
 // 1. p, q 分别在当前节点的两侧
 // 2. 排除第一种情况的时候，p 或者 q 就是当前节点时，此时找到了
 // 如果是 BST 的情况，很容易判断是不是满足上述条件
+
+// 先序遍历，基于三个值得大小可以直接判断当前节点是否满足，不满足就接着往下找
 var lowestCommonAncestor = function (root, p, q) {
     if ((p.val < root.val && q.val > root.val) || (q.val < root.val && p.val > root.val)) {
         return root;
