@@ -31,9 +31,6 @@ var lowestCommonAncestor = function (root, p, q) {
         if (root === null) {
             return false;
         }
-
-        // root.leftFinded = dfs(root.left, p, q);
-        // root.rightFinded = dfs(root.right, p, q);
         const leftFinded = dfs(root.left, p, q);
         const rightFinded = dfs(root.right, p, q);
 
