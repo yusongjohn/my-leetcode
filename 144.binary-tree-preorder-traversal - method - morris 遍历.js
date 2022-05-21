@@ -23,21 +23,22 @@ var preorderTraversal = function (root) {
 
             // 上面while循环退出只看有下面两种情况
             if (mostRight.right === null) { // 第一次遍历到current
-                ret.push(current);
+                ret.push(current.val);
                 mostRight.right = current;
                 current = current.left;
                 continue;
             } else if (mostRight.right === current) { // 第二次遍历到current
                 mostRight.right = null; // 恢复现状
+                current = current.right; // 接着遍历右节点
             }
         } else { // 如果current只有右节点
-            ret.push(current);
+            ret.push(current.val);
             current = current.right;
         }
     }
     return ret;
 };
 
-const root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3, null, null), null));
+// const root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3, null, null), null));
 
-preorderTraversal(root);
+// preorderTraversal(root);
