@@ -12,7 +12,7 @@ function morris(root) {
 
             if (mostRight.right === null) {
                 mostRight.right = current; // 设置后继节点
-                current = current.left;
+                current = current.left; // 因为要沿着左分支下去
                 continue;
             } else if (mostRight.right === current) {
                 mostRight.right = null; // 还原
