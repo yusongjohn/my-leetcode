@@ -3,21 +3,21 @@
  * @param {number[][]} prerequisites
  * @return {boolean}
  */
-var canFinish = function (numCourses, prerequisites) {
-    // 给每个节点定义三种状态：未搜索、搜索中、已完成
+var findOrder = function (numCourses, prerequisites) {
     const nodeStatus = { hasNotSearch: '', searching: 'searching', completed: 'completed' }
 
-    let valid = true;
     const edges = Array.from({ length: numCourses }, () => []);
     const visited = new Array(numCourses).fill(nodeStatus.hasNotSearch);
+    let valid = true;
 
     for (let info of prerequisites) {
         edges[info[1]].push(info[0]);
     }
+    const result = [];
 
     function dfs(u) {
         visited[u] = nodeStatus.searching;
-        for (let v of edges[u]) {
+        for (const v of edges[u]) {
             if (visited[v] == nodeStatus.hasNotSearch) {
                 dfs(v);
                 if (!valid) {
@@ -28,14 +28,14 @@ var canFinish = function (numCourses, prerequisites) {
                 return;
             }
         }
-        visited[u] = nodeStatus.completed;
+        visited[u] = nodeStatus.completed; // 出度为0，则保存
+        result.unshift(u); // 高级课程放在最后，如果是push，则在最后需要reverse
     }
- 
+
     for (let i = 0; i < numCourses && valid; i++) {
         if (visited[i] === nodeStatus.hasNotSearch) {
             dfs(i);
         }
     }
-
-    return valid;
+    return valid ? result : []
 };

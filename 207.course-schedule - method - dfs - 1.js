@@ -3,13 +3,13 @@
  * @param {number[][]} prerequisites
  * @return {boolean}
  */
+// labuladong 思想
 var canFinish = function (numCourses, prerequisites) {
     const visited = []; // 贪吃蛇，蛇走过的路
     const onPath = []; // 贪吃蛇 蛇的身体
     let hasCycle = false;
 
     const graph = buildGraph(numCourses, prerequisites);
-    console.log(graph)
 
     for (let index = 0; index < numCourses; index++) {
         if (hasCycle) {
