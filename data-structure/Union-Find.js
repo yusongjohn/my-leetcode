@@ -1,3 +1,4 @@
+// labuladong version 
 
 // n 为图中节点的个数
 function UnionFind(n) {
@@ -37,6 +38,8 @@ UnionFind.prototype.find = function (x) {
 }
 
 // 返回图中的连通分量个数
-UnionFind.prototype.count = function () {
+UnionFind.prototype.getCount = function () {
     return this.count;
 } 
+
+module.exports = UnionFind

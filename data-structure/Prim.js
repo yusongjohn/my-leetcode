@@ -1,5 +1,6 @@
 const PriorityQueue = require('./priorityQueue');
 
+// labuladong version
 function Prim(graph) {
     // graph 是用邻接表表示的一幅图，
     // graph[s] 记录节点 s 所有相邻的边，

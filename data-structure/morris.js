@@ -1,3 +1,4 @@
+// 左程云 version 
 function morris(root) {
     let current = root;
     let mostRight = null;
