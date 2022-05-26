@@ -1,113 +1,133 @@
-//dijkstraËã·¨
-#include<iostream>
-#include<algorithm>
-#include<stack>
+// dijkstraï¿½ã·¨
+#include <iostream>
+#include <algorithm>
+#include <stack>
 using namespace std;
-const int N=1005;
-const int INF=0x3f3f3f3f; //ÎŞÇî´ó
-int G[N][N],dist[N]; //G[][]ÎªÁÚ½Ó¾ØÕó£¬dist[i]±íÊ¾Ô´µãµ½½áµãiµÄ×î¶ÌÂ·¾¶³¤¶È
-int p[N]; //p[i]±íÊ¾Ô´µãµ½½áµãiµÄ×î¶ÌÂ·¾¶ÉÏiµÄÇ°Çı
-int n,m; //nÎª½áµãÊı£¬mÎª±ßÊı
-bool flag[N]; //Èç¹ûflag[i]µÈÓÚtrue£¬ËµÃ÷½áµãiÒÑ¾­¼ÓÈëµ½S¼¯ºÏ;·ñÔòiÊôÓÚV-S¼¯ºÏ
+const int N = 1005;
+const int INF = 0x3f3f3f3f;
+int G[N][N], dist[N];
+int p[N];
+int n, m;
+bool flag[N];
 
-void dijkstra(int u){
-	for(int i=1;i<=n;i++){ //³õÊ¼»¯
-		dist[i]=G[u][i]; //³õÊ¼»¯Ô´µãuµ½ÆäËû¸÷¸ö½áµãµÄ×î¶ÌÂ·¾¶³¤¶È
-		flag[i]=false;
-		if(dist[i]==INF)
-			p[i]=-1; //Ô´µãuµ½¸Ã½áµãµÄÂ·¾¶³¤¶ÈÎªÎŞÇî´ó£¬ËµÃ÷Ô´µãuÓë½áµãi²»ÏàÁÚ
+void dijkstra(int u)
+{
+	for (int i = 1; i <= n; i++)
+	{
+		dist[i] = G[u][i];
+		flag[i] = false;
+		if (dist[i] == INF)
+			p[i] = -1;
 		else
-			p[i]=u; //ËµÃ÷½áµãiÓëÔ´µãuÏàÁÚ£¬ÉèÖÃiµÄÇ°ÇıÎªu
+			p[i] = u;
 	}
-    dist[u]=0;
-    flag[u]=true; //³õÊ¼Ê±£¬¼¯ºÏSÖĞÖ»ÓĞÔ´µãu
-	for(int i=1;i<n;i++){
-		int temp=INF,t=u;
-		for(int j=1;j<=n;j++){ //ÔÚ¼¯ºÏV-SÖĞÑ°ÕÒ¾àÀëÔ´µãu×î½üµÄ½áµãt
-			if(!flag[j]&&dist[j]<temp){
-				t=j;
-				temp=dist[j];
+	dist[u] = 0;
+	flag[u] = true;
+	for (int i = 1; i < n; i++)
+	{
+		int temp = INF, t = u;
+		for (int j = 1; j <= n; j++)
+		{
+			if (!flag[j] && dist[j] < temp)
+			{
+				t = j;
+				temp = dist[j];
 			}
 		}
-		if(t==u) return; //ÕÒ²»µ½t£¬Ìø³öÑ­»·
-		flag[t]=true;  //·ñÔò£¬½«t¼ÓÈëS¼¯ºÏ
-		for(int j=1;j<=n;j++){ //¸üĞÂtµÄÁÚ½ÓµãjµÄ×î¶ÌÂ·¾¶³¤¶È£¬ËÉ³Ú²Ù×÷ 
-			if(!flag[j]&&dist[j]>dist[t]+G[t][j]){
-		    	dist[j]=dist[t]+G[t][j];
-		    	p[j]=t;
-		    }
+		if (t == u)
+			return;
+		flag[t] = true;
+		for (int j = 1; j <= n; j++)
+		{
+			if (!flag[j] && dist[j] > dist[t] + G[t][j])
+			{
+				dist[j] = dist[t] + G[t][j];
+				p[j] = t;
+			}
 		}
 	}
 }
 
-void print(){//Êä³öÔ´µãµ½ÆäËü½ÚµãµÄ×î¶Ì¾àÀë 
-	for(int i=1;i<=n;i++){
-    	if(i!=1) cout<<" ";
-        if(dist[i]==INF)
-        	cout<<"impossible";
-        else
-        	cout<<dist[i];
-    }
-    cout<<endl;
+void print()
+{
+	for (int i = 1; i <= n; i++)
+	{
+		if (i != 1)
+			cout << " ";
+		if (dist[i] == INF)
+			cout << "impossible";
+		else
+			cout << dist[i];
+	}
+	cout << endl;
 }
 
-void findp(int u){//Êä³öÔ´µãµ½uµÄ×î¶ÌÂ·¾¶£¬µİ¹é 
-	if(u==-1)
-		return ;
+void findp(int u)
+{
+	if (u == -1)
+		return;
 	findp(p[u]);
-	cout<<u<<"\t"; 
+	cout << u << "\t";
 }
 
-void findpath(int u){//Êä³öÔ´µãµ½ÆäËü¸÷½áµãµÄ×î¶ÌÂ·¾¶£¬µİ¹é 
-	cout<<"Ô´µãÎª£º"<<u<<endl;
-	cout<<"Ô´µãµ½ÆäËü¸÷½áµã×î¶ÌÂ·¾¶Îª£º"<<endl;
-	for(int i=1;i<=n;i++){
-    	findp(i);
-    	cout<<"×î¶Ì¾àÀëÎª£º"<<dist[i]<<endl;
+void findpath(int u)
+{
+	cout << "Ô´ï¿½ï¿½Îªï¿½ï¿½" << u << endl;
+	cout << "Ô´ï¿½ãµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Îªï¿½ï¿½" << endl;
+	for (int i = 1; i <= n; i++)
+	{
+		findp(i);
+		cout << "ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Îªï¿½ï¿½" << dist[i] << endl;
 	}
 }
-    	
-void findpath2(int u){//Êä³öÔ´µãµ½ÆäËü¸÷½áµãµÄ×î¶ÌÂ·¾¶£¬ÀûÓÃÕ»·Çµİ¹é
+
+void findpath2(int u)
+{
 	int x;
-	stack<int>s;
-	cout<<"Ô´µãÎª£º"<<u<<endl;
-	cout<<"Ô´µãµ½ÆäËü¸÷½áµã×î¶ÌÂ·¾¶Îª£º"<<endl;
-	for(int i=1;i<=n;i++){
-    	x=p[i];
-    	while(x!=-1){
-    		s.push(x);
-    		x=p[x];
-    	}
-    	while(!s.empty()){
-	    	cout<<s.top()<<"---";
-      		s.pop();
-    	}
-		cout<<i<<"\t×î¶Ì¾àÀëÎª£º"<<dist[i]<<endl;
+	stack<int> s;
+	cout << "Ô´ï¿½ï¿½Îªï¿½ï¿½" << u << endl;
+	cout << "Ô´ï¿½ãµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Îªï¿½ï¿½" << endl;
+	for (int i = 1; i <= n; i++)
+	{
+		x = p[i];
+		while (x != -1)
+		{
+			s.push(x);
+			x = p[x];
+		}
+		while (!s.empty())
+		{
+			cout << s.top() << "---";
+			s.pop();
+		}
+		cout << i << "\tï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Îªï¿½ï¿½" << dist[i] << endl;
 	}
 }
 
-int main(){
-    int u,v,w,st;//u¡¢v±íÊ¾½áµã£¬w±íÊ¾u--vµÄ¾àÀë£¬st±íÊ¾Ô´µã
-    int t;//²âÊÔÓÃÀıÊı 
-    cin>>t;
-    while(t--){
-    	cin>>n>>m;
-        for(int i=1;i<=n;i++)
-        	for(int j=1;j<=n;j++)
-            	G[i][j]=INF;//³õÊ¼»¯ÁÚ½Ó¾ØÕóÎªÎŞÇî´ó
-        for(int i=1;i<=m;i++){
-            cin>>u>>v>>w;
-            G[u][v]=min(G[u][v],w); //ÁÚ½Ó¾ØÕó´¢´æ£¬±£Áô×îĞ¡µÄ¾àÀë
-        }
-        cin>>st;//ÊäÈëÔ´µã 
-        dijkstra(st);
-//        print();
+int main()
+{
+	int u, v, w, st;
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		cin >> n >> m;
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= n; j++)
+				G[i][j] = INF;
+		for (int i = 1; i <= m; i++)
+		{
+			cin >> u >> v >> w;
+			G[u][v] = min(G[u][v], w);
+		}
+		cin >> st;
+		dijkstra(st);
 		findpath(st);
 		findpath2(st);
-    }
-    return 0;
+	}
+	return 0;
 }
-/*²âÊÔÑùÀı
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 2
 5 11
 1 5 12
@@ -129,4 +149,4 @@ int main(){
 2 3 4
 3 1 5
 1
-*/ 
+*/

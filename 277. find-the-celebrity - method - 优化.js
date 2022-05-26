@@ -22,7 +22,7 @@ var solution = function (knows) {
         // 可以确定的是，最多只会有一个人是名人； // 名人：其他所有人都认识他，他不认识任何人
 
         let candidate = 0;
-        for (let other = 1; other < n; other++) {
+        for (let other = 1; other < n; other++) { // n 个人里面排除 n - 1 个人（每次对比可以排除一个）
             // if (!knows(candidate, other)) { // 排除other
 
             // } else if (knows(candidate, other)) { // 排除candidate, other 有可能
