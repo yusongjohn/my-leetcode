@@ -18,8 +18,8 @@ function buildGraph(n, connections) {
             let xj = connections[j][0], yj = connections[j][1];
             let weight = Math.abs(xi - xj) + Math.abs(yi - yj);
             // 无向图，邻接表互相保存
-            graph[i].push([i, j, weight]); // 第i个节点的邻接表
-            graph[j].push([j, i, weight]); // 第j个节点的邻接表
+            graph[i].push([i, j, weight]); // 第 i 个节点的邻接表
+            graph[j].push([j, i, weight]); // 第 j 个节点的邻接表
         }
     }
 
