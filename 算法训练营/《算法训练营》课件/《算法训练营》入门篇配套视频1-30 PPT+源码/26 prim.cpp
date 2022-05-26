@@ -1,63 +1,81 @@
-//×îĞ¡Éú³ÉÊ÷£¬PrimËã·¨
-#include<iostream>
-#include<algorithm>
+// æœ€å°ç”Ÿæˆæ ‘ï¼Œprim ç®—æ³•
+#include <iostream>
+#include <algorithm>
 using namespace std;
-const int inf=0x3f3f3f3f;
-const int N=1005;
-int c[N][N],closest[N],lowcost[N],ans[N];
-bool s[N];//Èç¹ûs[i]=true,ËµÃ÷½ÚµãiÒÑ¼ÓÈëU
-int n,m;//½ÚµãÊı£¬±ßÊı 
+const int inf = 0x3f3f3f3f;
+const int N = 1005;
+int c[N][N], closest[N], lowcost[N], ans[N]; // c[N][N]: é‚»æ¥çŸ©é˜µï¼Œå€¼ä¸º0ï¼Œæˆ–è€…æ˜¯æƒé‡å€¼
+bool s[N]; // å¦‚æœ s[i] = true, è¯´æ˜èŠ‚ç‚¹ i å·²åŠ å…¥ U
+int n, m;
 
-int prim(int n){ //Çó×îĞ¡Éú³ÉÊ÷
-	s[1]=true; //³õÊ¼Ê±£¬¼¯ºÏÖĞUÖ»ÓĞÒ»¸öÔªËØ£¬¼´¶¥µã1
-	lowcost[1]=0;
-	for(int i=2;i<=n;i++){//³õÊ¼»¯ 
-        lowcost[i]=c[1][i];
-        closest[i]=1;
-        s[i]=false;
+int prim(int n) // æ±‚æœ€å°ç”Ÿæˆæ ‘
+{
+	s[1] = true; // åˆå§‹æ—¶ï¼Œé›†åˆä¸­åªæœ‰ä¸€ä¸ªå…ƒç´ ï¼Œå®šç‚¹1
+	lowcost[1] = 0;
+
+	// åˆå§‹åŒ–
+	for (int i = 2; i <= n; i++)
+	{
+		lowcost[i] = c[1][i];
+		closest[i] = 1;
+		s[i] = false;
 	}
-    for(int i=1;i<n;i++){ 
-		int temp=inf;
-		int t=1;
-		for(int j=1;j<=n;j++){//ÔÚV-U¼¯ºÏÖĞÑ°ÕÒlowcost[j]×îĞ¡µÄ½Úµãt
-		    if(!s[j]&&lowcost[j]<temp){
-		        t=j;
-		        temp=lowcost[j];
-		    }
+
+	for (int i = 1; i < n; i++)
+	{
+		int temp = inf;
+		int t = 1;
+
+		// åœ¨ V-U é›†åˆä¸­å¯»æ‰¾lowcost[j]æœ€å°çš„èŠ‚ç‚¹ t
+		for (int j = 1; j <= n; j++)
+		{
+			if (!s[j] && lowcost[j] < temp)
+			{
+				t = j;
+				temp = lowcost[j];
+			}
 		}
-		if(t==1)
-		    return 0;//ÕÒ²»µ½t£¬Ìø³öÑ­»·£¬²»´æÔÚ×îĞ¡Éú³ÉÊ÷£¨·ÇÁ¬Í¨Í¼£© 
-		s[t]=true;//·ñÔò£¬t¼ÓÈëU¼¯ºÏ
-		for(int j=1;j<=n;j++){ //¸üĞÂlowcostºÍclosest
-		    if(!s[j]&&c[t][j]<lowcost[j]){
-		        lowcost[j]=c[t][j];
-		        closest[j]=t;
-		    }
+		if (t == 1)
+		{
+			return 0;  // æ‰¾ä¸åˆ°ä»–tï¼Œè·³å‡ºå¾ªç¯ï¼Œä¸å­˜åœ¨æœ€å°ç”Ÿæˆæ ‘ï¼ˆéè¿é€šå›¾ï¼‰
 		}
-    }
-	int sumcost=0;
-	for(int i=1;i<=n;i++)
-		sumcost+=lowcost[i];
-    return sumcost;
+
+		s[t] = true; // å¦åˆ™ï¼Œt åŠ å…¥é›†åˆ U
+		for (int j = 1; j <= n; j++) // æ›´æ–° lowcost å’Œ losest
+		{ 
+			if (!s[j] && c[t][j] < lowcost[j])
+			{
+				lowcost[j] = c[t][j];
+				closest[j] = t;
+			}
+		}
+	}
+	int sumcost = 0;
+	for (int i = 1; i <= n; i++)
+		sumcost += lowcost[i];
+	return sumcost;
 }
 
-int main(){
-	int t,u,v,w;
-	cin>>t;
-	while(t--){
-        cin>>n>>m;
-        for(int i=1;i<=n;i++)//³õÊ¼»¯ 
-        	for(int j=1;j<=n;j++)
-            	c[i][j]=inf;
-        for(int i=0;i<m;i++){
-        	cin>>u>>v>>w;
-        	c[u][v]=c[v][u]=min(c[u][v],w);
-    	}
-        cout<<prim(n)<<endl;
+int main()
+{
+	int t, u, v, w;
+	cin >> t;
+	while (t--)
+	{
+		cin >> n >> m;
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= n; j++)
+				c[i][j] = inf;
+		for (int i = 0; i < m; i++)
+		{
+			cin >> u >> v >> w;
+			c[u][v] = c[v][u] = min(c[u][v], w);
+		}
+		cout << prim(n) << endl;
 	}
-    return 0;
+	return 0;
 }
-/*²âÊÔÑùÀı 
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 1
 7 12
 1 2 23
@@ -72,4 +90,4 @@ int main(){
 5 6 17
 5 7 16
 6 7 25
-*/ 
+*/

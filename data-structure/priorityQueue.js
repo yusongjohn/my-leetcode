@@ -1,20 +1,16 @@
-
-// compareTo 返回值 按照下述方式定义，则返回一个大顶堆，否则是一个小顶堆
-// 大于 0: 表示当前元素大
-// 等于：相等
-// 小于0，anotherElement大
-
-// 小顶堆
-function PriorityQueue(items) { // 确保Item具有compareTo接口
+function PriorityQueue(compareTo, items = []) { // 确保Item具有compareTo接口
     // 插入式建堆
-    // 空堆
-    this.items = [];
-    // 逐个插入元素
-    items.forEach(item => this.enqueue(item))
+    this.items = []; // 空堆
+    items.forEach(item => this.enqueue(item)); // 逐个插入元素
+    this.compareTo = compareTo
 }
 
 PriorityQueue.prototype.size = function () {
     return this.items.length;
+}
+
+PriorityQueue.prototype.isEmpty = function () {
+    return this.items.length === 0;
 }
 
 PriorityQueue.prototype.peek = function () {
@@ -31,11 +27,11 @@ PriorityQueue.prototype.dequeue = function () {
     // 然后弹出最后一个元素（上一步的堆顶元素）
     const popItem = this.items.pop();
     // 堆化（下溢）
-    _down(this.items, 0)
+    this._down(this.items, 0)
     return popItem
 }
 
-function _down(items, parentIndex) {
+PriorityQueue.prototype._down = function (items, parentIndex) {
     const heapSize = items.length;
 
 
@@ -47,12 +43,12 @@ function _down(items, parentIndex) {
 
 
         // items[minIndex] > items[c1Index]
-        if (c1Index < heapSize && items[minIndex].compareTo(items[c1Index]) > 0) {
+        if (c1Index < heapSize && this.compareTo(items[minIndex], items[c1Index]) > 0) {
             minIndex = c1Index
         }
 
         // items[minIndex] > items[c2Index]
-        if (c2Index < heapSize && items[minIndex].compareTo(items[c2Index]) > 0) {
+        if (c2Index < heapSize && this.compareTo(items[minIndex], items[c2Index]) > 0) {
             minIndex = c2Index
         }
 
@@ -74,7 +70,7 @@ PriorityQueue.prototype.enqueue = function (key) {
     let parentIndex = Math.floor((currentIndex - 1) / 2);
 
     // this.items[currentIndex] < this.items[parentIndex]
-    while (currentIndex > 0 && this.items[currentIndex].compareTo(this.items[parentIndex]) < 0) {
+    while (currentIndex > 0 && this.compareTo(this.items[currentIndex], this.items[parentIndex]) < 0) {
         swap(this.items, currentIndex, parentIndex);
         currentIndex = parentIndex;
 
@@ -88,8 +84,5 @@ function swap(items, i, j) {
     items[i] = items[j]
     items[j] = temp
 }
-
-
-// 示例：Q.347、Q.23
 
 module.exports = PriorityQueue
