@@ -1,4 +1,4 @@
-// dijkstra�㷨
+// dijkstra
 #include <iostream>
 #include <algorithm>
 #include <stack>
@@ -25,6 +25,7 @@ void dijkstra(int u)
 	flag[u] = true;
 	for (int i = 1; i < n; i++)
 	{
+		// 找最小
 		int temp = INF, t = u;
 		for (int j = 1; j <= n; j++)
 		{
@@ -37,6 +38,8 @@ void dijkstra(int u)
 		if (t == u)
 			return;
 		flag[t] = true;
+
+		// 松弛
 		for (int j = 1; j <= n; j++)
 		{
 			if (!flag[j] && dist[j] > dist[t] + G[t][j])
