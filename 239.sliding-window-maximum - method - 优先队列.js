@@ -1,3 +1,25 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var maxSlidingWindow = function (nums, k) {
+    const initWindows = nums.slice(0, k).map((value, index) => { return { value, index } });
+    // 注意：维护一个大顶堆
+    const priorityQueue = new PriorityQueue((b, a) => a.value - b.value, initWindows);
+    const result = [priorityQueue.peek().value];
+
+    for (let right = k; right < nums.length; right++) {
+        priorityQueue.enqueue({ value: nums[right], index: right });
+        const leftIndex = right - k + 1; // 假设 k = 1, right = 1 ,那 leftIndex = 1; window: [leftIndex, right]
+        while (priorityQueue.peek().index < leftIndex) { // 直到最大值的落在窗口内
+            priorityQueue.dequeue();
+        }
+        result.push(priorityQueue.peek().value);
+    }
+    return result;
+};
+
 function PriorityQueue(compareTo, items = []) {
     // 插入式建堆
     this.items = []; // 空堆
@@ -84,4 +106,3 @@ function swap(items, i, j) {
     items[i] = items[j]
     items[j] = temp
 }
-module.exports = PriorityQueue;
