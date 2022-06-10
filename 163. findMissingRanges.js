@@ -14,14 +14,14 @@ var findMissingRanges = function (nums, lower, upper) {
     }
     const ret = [];
     // 处理下边界
-    // const firstNum = nums[0]
-    // if (firstNum - lower < 1) { // 即 <= 0;
+    const firstNum = nums[0]
+    if (firstNum - lower < 1) { // 即 <= 0;
 
-    // } else if (firstNum - lower === 1) {
-    //     ret.push(lower + '')
-    // } else if (firstNum - lower > 1) {
-    //     ret.push([lower, firstNum - 1].join('->'))
-    // }
+    } else if (firstNum - lower === 1) {
+        ret.push(lower + '')
+    } else if (firstNum - lower > 1) {
+        ret.push([lower, firstNum - 1].join('->'))
+    }
 
     let preNum = firstNum;
     for (let i = 1; i < nums.length; i++) {
@@ -37,14 +37,14 @@ var findMissingRanges = function (nums, lower, upper) {
     }
 
     // 处理上边界
-    // const lastNum = nums[nums.length - 1];
-    // if (upper - lastNum < 1) { // 即 <= 0;
+    const lastNum = nums[nums.length - 1];
+    if (upper - lastNum < 1) { // 即 <= 0;
 
-    // } else if (upper - lastNum === 1) {
-    //     ret.push(upper + '');
-    // } else if (upper - lastNum > 1) {
-    //     ret.push([lastNum + 1, upper].join('->'))
-    // }
+    } else if (upper - lastNum === 1) {
+        ret.push(upper + '');
+    } else if (upper - lastNum > 1) {
+        ret.push([lastNum + 1, upper].join('->'))
+    }
     return ret;
 };
 
